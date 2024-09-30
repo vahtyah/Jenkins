@@ -17,14 +17,14 @@ pipeline {
             steps {
                 echo 'Deploying to Staging...'
                 // Các bước deploy đến staging
-                sh './deploy staging'
+
             }
         }
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
                 // Các bước deploy đến production
-                sh './deploy production'
+
             }
         }
     }
