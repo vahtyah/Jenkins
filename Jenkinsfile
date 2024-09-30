@@ -1,10 +1,16 @@
 pipeline {
     agent any
+    failure {
+        echo "Это будет выполняться, если задача провалилась"
+        mail to: 'vahtyah@gmail.com',
+            subject: "${env.JOB_NAME} – Сборка № ${env.BUILD_NUMBER} провалилась",
+            body: "Для получения дополнительной информации о провале пайплайна, проверьте консольный вывод по адресу ${env.BUILD_URL}.",
+            }
     stages {
         stage('Clone') {
             steps {
                 echo 'Clone...'
-                git 'https://github.com/vahtyah/Jenkins.git'
+                git branch: 'main', url: 'https://github.com/vahtyah/Jenkins.git'
             }
         }
         stage('Build') {
