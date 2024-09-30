@@ -1,14 +1,5 @@
 pipeline {
     agent any
-    post {
-        failure {
-                echo "Это будет выполняться, если задача провалилась"
-                mail to: 'vahtyah@gmail.com',
-                    subject: "${env.JOB_NAME} – Сборка № ${env.BUILD_NUMBER} провалилась",
-                    body: "Для получения дополнительной информации о провале пайплайна, проверьте консольный вывод по адресу ${env.BUILD_URL}.",
-        }
-    }
-    
     stages {
         stage('Clone') {
             steps {
@@ -41,6 +32,21 @@ pipeline {
                 // Các bước deploy đến production
 
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'This will always run after all stages'
+        }
+        success {
+            echo 'This will run only if all stages are successful'
+        }
+        failure {
+            echo 'This will run only if any stage fails'
+            mail to: 'vahtyah@gmail.com',
+                 subject: "Pipeline ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failed",
+                 body: "The pipeline has failed. Please check the build output at ${env.BUILD_URL}"
         }
     }
 }
