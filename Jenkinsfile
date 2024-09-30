@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage('Clone') {
+            steps {
+                echo 'Clone...'
+                git 'https://github.com/vahtyah/Jenkins.git'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building...'
